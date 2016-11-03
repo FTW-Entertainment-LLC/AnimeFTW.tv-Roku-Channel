@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (C) Vlad Troyanker 2016.  All Rights Reserved. -->
+
+<component name="MainScene" extends="Scene">
+  
+  <children>
+
+    <Overhang 
+    logoUri = "pkg:/images/new-logo.png"
+    title=""
+    showClock="false"
+    showOptions = "true" 
+    optionsAvailable = "false"
+    optionsText="Menu"
+    height="130" />
+
+    <RowList  id="posterGrid"
+      translation="[0,130]"
+      itemSize="[1920,450]"
+      rowItemSize="[[300,428],[300,428],[450,190],[300,428]]"
+      rowHeights="[450,450,215,450]"
+      itemSpacing="[52,64]"
+      rowItemSpacing="[[46,0]]"
+      numRows="3"
+      focusXOffset="600"
+      showRowLabel="[true]"
+      showRowCounter="[true]"
+      rowLabelOffset="[[30,20]]"
+      rowFocusAnimationStyle="fixedFocusWrap"
+      vertFocusAnimationStyle="fixedFocusWrap"
+      rowLabelFont = "font:MediumBoldSystemFont">
+    </RowList>
+
+    <PosterGridScreen  id="posterGridScreen"
+      translation="[0,130]"
+      visible="false"
+    />
+
+    <SpringboardMovieScreen id="sbMovieScreen"
+      translation="[0,130]"
+      visible="false"
+    />
+
+    <SpringboardSeriesScreen id="sbSeriesScreen"
+      translation="[0,130]"
+      visible="false"
+    />
+    <Callout id="gridCallout"
+      translation="[800,550]"
+      visible="false"
+    />
+  </children>
+
+  <script type="text/brightscript" uri="pkg:/components/MainScene.brs"/>
+</component>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!-- Copyright (C) Vlad Troyanker 2016.  All Rights Reserved. -->
+
+<component name="Callout" extends="Group">
+    <interface>
+        <field id="content"  type="node" onChange="onContentChange"/>
+    </interface>
+        
+    <children>
+        
+        <Poster id="bgframe"
+            translation="[0,0]"
+            width="750"
+            height="385"
+            uri = "pkg:/images/callout_hd.png"
+        />
+            
+        <Label id="title"
+            color="0x03a9f4"
+            width="600"
+            translation="[100,80]"
+            text=""
+            font = "font:MediumBoldSystemFont"
+        />
+
+        <Label id="description"
+            translation="[100,140]"
+            color="0xFFFFFF"
+            wrap="true"
+            width="600"
+            height="250"
+            text=""
+        />
+    </children>
+
+<!-- main handler -->
+<script type="text/brightscript" uri="pkg:/components/Callout.brs" />
+
+</component> 

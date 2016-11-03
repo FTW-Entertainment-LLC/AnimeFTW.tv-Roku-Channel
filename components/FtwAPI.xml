@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (C) Vlad Troyanker 2016.  All Rights Reserved. -->
+<component name="FTWAPI" extends="Task">
+  
+  <interface>
+    <field id="request" type="assocarray"/>
+
+    <!-- Data is returned via observable elements -->
+    <field id="onresult" type="assocarray"/>
+    <field id="responseheaders" type="assocarray"/>
+ </interface>
+
+  <script type="text/brightscript" uri="pkg:/components/FtwApi.brs"/>
+</component>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!-- Copyright (C) Vlad Troyanker 2016.  All Rights Reserved. -->
+
+<component name="SpringboardSeriesScreen" extends="Group" initialFocus="menuList">
+    <interface>
+        <field id="content"  type="assocarray" onChange="onContentChange"/>
+        <field id="state"    type="string"     alwaysNotify="true"/>
+    </interface>
+    
+    
+    <children>
+      <Group id="sbElements">
+        
+      <Poster id="moviePoster"
+          translation="[150, 0]"
+          width="550"
+          height="780" />
+      
+      <LabelList  id="menuList"
+        translation="[850,0]"
+        itemSize="[800,80]"
+        numRows="5"
+        font = "font:MediumBoldSystemFont" 
+        focusedFont= "font:MediumBoldSystemFont"
+        vertFocusAnimationStyle="floatingFocus"
+        wrapDividerHeight="2">
+        
+        <ContentNode id="menucontent" role="content">
+        </ContentNode>
+      </LabelList>       
+  
+      <Description
+        id="description"
+        translation="[850, 500]"
+        itemSpacings="[7,17]"/>
+
+      <Label id="rating"
+        translation="[150, 800]"
+        width="550"
+        numLines="1"
+        font="font:MediumBoldSystemFont"
+        text=""
+        />
+      </Group>
+
+      <Video id="videoNode"
+      width="1920"
+      height="1080"
+      translation="[0,-130]"
+      visible="false"/>
+
+    </children>
+
+    <!-- main handler -->
+    <script type="text/brightscript" uri="pkg:/components/SpringboardSeriesScreen.brs" />
+
+</component>
