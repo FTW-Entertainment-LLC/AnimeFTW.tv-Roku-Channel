@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!-- Copyright (C) Reign Software 2016.  All Rights Reserved. -->
+
+<component name="DeviceRegisterScreen" extends="Group" initialFocus="newcode">
+    <interface>
+        <field id="state"    type="string"     alwaysNotify="true"/>
+        <field id="control"  type="string"     alwaysNotify="true"/>
+    </interface>
+    
+    
+    <children>
+
+      <Label  id="prompt"
+        translation="[500,200]"
+        width="1000"
+        font = "font:MediumSystemFont" 
+        text ="To link Roku wth your account go to"
+      />
+      <Label id="webaddress"
+        translation="[500, 290]"
+        width="1000"
+        numLines="1"
+        font="font:LargeBoldSystemFont"
+        text="https://www.animeftw.tv/connect"
+      />
+      <Label  id="prompt2"
+        translation="[500,450]"
+        width="1000"
+        font = "font:MediumSystemFont" 
+        text ="and enter this code:"
+      />
+
+      <Label id="code"
+        translation="[500, 530]"
+        width="1000"
+        numLines="1"
+        font="font:LargeBoldSystemFont"
+        text=""
+      />
+
+      <Label  id="prompt3"
+        translation="[500,700]"
+        width="700"
+        wrap="true"
+        font = "font:MediumSystemFont" 
+        text ="[Once you enter the code this screen will update automatically]"
+      />
+      <Button id = "newcode"
+      text = "New Code"
+      showFocusFootprint = "true"
+      minWidth = "240" 
+      translation="[1400, 700]"
+      />
+
+      <Poster id = "icon"
+      uri = "pkg:/images/registration_icon.png"
+      height = "300"
+      width = "300" 
+      translation="[100, 200]"
+      />
+
+    <Timer
+      id="validateTimer"
+      repeat="true"
+      duration="7"
+    />
+
+    </children>
+
+    <!-- main handler -->
+  <script type="text/brightscript" uri="pkg:/components/DeviceRegisterScreen.brs" />
+  <script type="text/brightscript" uri="pkg:/source/RegistryUtils.brs" />
+
+</component>

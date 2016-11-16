@@ -1,7 +1,8 @@
 ' ** 
-' ** Copyright Vlad Troyanker 2016. All Rights Reserved. ***
+' ** Copyright (C) Reign Software 2016. All Rights Reserved. ***
 ' ** See attached LICENSE file included in this package for details.'
 ' ** 
+
 sub init()
   print "[sbs.init]"
   m.screen = m.top.findNode("sbElements")
@@ -14,9 +15,6 @@ sub init()
   m.poster.observeField("loadStatus", "onPosterLoading")
   m.menu.observeField("itemSelected", "onMenuAction")
  
-  m.apiclient = createObject("roSGNode","FTWAPI")
-  m.apiclient.observeField("onresult", "gotTopSeries")
-
   m.video   = m.top.findNode("videoNode")
   m.video.observeField("state", "onVideoStateChanged")
 end sub
@@ -32,15 +30,17 @@ sub startvideoplayback(content as Object)
 end sub
 
 sub fetchEpisodes(data as Object)
-  m.apiclient.unobserveField("onresult")
-  m.apiclient.observeField("onresult","gotEpisodes")
+  if NOT m.doesexist("apiclient")
+    m.apiclient = createObject("roSGNode","FTWAPI")
+    m.apiclient.observeField("onresult","gotEpisodes")
+  endif
   m.apiclient.request = {action:"display-episodes", id:data.id, count:"20"}
 end sub
 
 sub gotEpisodes(rsp as Object)
   print "[sbs.got.episodes]"
   o = rsp.getData()
-  print "[sbs.got.episodes]"
+
   if o.status <> "200"
     print "[sbs.got.epi]", "Server error: "; o.status
     return
@@ -48,7 +48,7 @@ sub gotEpisodes(rsp as Object)
   m.menu.content.removeChildIndex(0) 'remove loading... node'
   count=1
   for each item in o.results
-    print item
+    'print item
     content = m.menu.content.createChild("ContentNode")
     content.url          = item.video
     content.streamformat = item.videotype
@@ -88,6 +88,7 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         else
           m.screen.visible = false 'return to Homescreen '
           m.top.state="done"
+          m.apiclient.cancel = {} 'try cancelling an outstanding request before quitting'
         endif
         handled = true
       elseif key="up" OR key="down"

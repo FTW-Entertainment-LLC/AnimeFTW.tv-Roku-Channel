@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (C) Reign Software 2016.  All Rights Reserved. -->
+
+<component name="RegistryTask" extends="Task">
+  
+  <interface>
+<!-- {key:<madatory>, section:<optional>, def:<default value to return for reads>, value:<value for writes>} -->
+    <field id="read"   type="assocarray"/>
+    <field id="write"  type="assocarray"/>
+    <field id="sync"   type="Integer"/>
+    <field id="delete" type="assocarray"/>
+ 
+    <!-- Data is returned via observable elements -->
+    <field id="onread" type="assocarray" alwaysNotify="true"/>
+ </interface>
+
+  <script type="text/brightscript" uri="pkg:/components/Registry.brs"/>
+  <script type="text/brightscript" uri="pkg:/source/RegistryUtils.brs"/>
+</component>

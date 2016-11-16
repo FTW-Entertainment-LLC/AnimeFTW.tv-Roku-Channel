@@ -1,5 +1,5 @@
 ' ** 
-' ** Copyright Vlad Troyanker 2016. All Rights Reserved. ***
+' ** Copyright (C) Reign Software 2016. All Rights Reserved. ***
 ' ** See attached LICENSE file included in this package for details.'
 ' ** 
 
@@ -10,9 +10,18 @@ sub init()
   m.sbs     = m.top.findNode("sbSeriesScreen")
   m.callout = m.top.findNode("gridCallout")
   m.alg     = m.top.findNode("posterGridScreen")
-
+  m.login   = m.top.findNode("loginScreen")
   m.content = createObject("RoSGNode","ContentNode") 'root content node'
 
+  if m.global.config.usertoken <> ""
+    launchHome()
+  else
+    launchLogin()
+  endif
+end sub
+
+sub launchHome()
+  print "[grid.lnch.home]"
   m.apiclient = createObject("roSGNode","FTWAPI")
   m.apiclient.observeField("onresult", "gotTopSeries")
   
@@ -25,12 +34,23 @@ sub init()
   m.grid.observeField("rowItemFocused", "onitemfocused")
 end sub
 
+sub launchLogin()
+  print "[grid.lnch.login]"
+  m.login.observeField("state", "launchHome")
+  m.login.control="start"
+  m.login.visible=true
+  m.login.setFocus(true)
+end sub
+
 sub focusBackHome()
   print "[grid.back.home]"
- m.sbs.unobserveField("state")
- m.sb.unobserveField("state")
- m.alg.unobserveField("state")
- showpostergrid()
+  m.sbs.unobserveField("state")
+  m.sb.unobserveField("state")
+  m.alg.unobserveField("state")
+  if m.login <> Invalid
+    m.login.unobserveField("state")
+  endif
+   showpostergrid()
 end sub
 
 sub showpostergrid()
@@ -118,6 +138,7 @@ sub fetchContentDetails(content as Object)
   m.apiclient2.request = {action:"display-single-series", id:content.url}
 end sub
 
+'May @return Invalid'
 function lookupContentNode(index as Object) as Object
   row = index[0]
   item= index[1]
@@ -243,7 +264,7 @@ end sub
 sub onitemfocused()
   print "[grid.focus]", m.grid.rowItemFocused, m.grid.visible
   content = lookupContentNode(m.grid.rowItemFocused)
-  if content.title <> ""
+  if content<>Invalid AND content.title <> ""
     m.callout.content = content
     m.callout.visible=true
   end if

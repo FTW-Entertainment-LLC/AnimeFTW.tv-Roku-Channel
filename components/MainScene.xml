@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright (C) Vlad Troyanker 2016.  All Rights Reserved. -->
+<!-- Copyright (C) Reign Software 2016.  All Rights Reserved. -->
 
 <component name="MainScene" extends="Scene">
   
   <children>
 
     <Overhang 
-    logoUri = "pkg:/images/new-logo.png"
+    logoUri = "pkg:/images/newsite-logo.png"
     title=""
     showClock="false"
     showOptions = "true" 
@@ -25,7 +25,7 @@
       focusXOffset="600"
       showRowLabel="[true]"
       showRowCounter="[true]"
-      rowLabelOffset="[[30,20]]"
+      rowLabelOffset="[[60,20]]"
       rowFocusAnimationStyle="fixedFocusWrap"
       vertFocusAnimationStyle="fixedFocusWrap"
       rowLabelFont = "font:MediumBoldSystemFont">
@@ -47,6 +47,11 @@
     />
     <Callout id="gridCallout"
       translation="[800,550]"
+      visible="false"
+    />
+
+    <DeviceRegisterScreen id="loginScreen"
+      translation="[0,130]"
       visible="false"
     />
   </children>

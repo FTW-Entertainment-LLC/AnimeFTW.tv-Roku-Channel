@@ -1,27 +1,32 @@
 ' ** 
-' ** Copyright Vlad Troyanker 2016. All Rights Reserved. ***
+' ** Copyright (C) Reign Software 2016. All Rights Reserved. ***
 ' ** See attached LICENSE file included in this package for details.'
 ' ** 
 
 
 sub init()
-  print "[api.init]"
 
   m.apihost="https://www.animeftw.tv/api/v2/?action="
-
   m.static_params = {
 				devkey: "e9r9-0cA8-7515-82q3",
-				token:  "873b9231-1ef1-4c03-a50f-847cfe2e6fc0"
 				}
+  reg = RegistrySync()
+  usertoken = reg.read("usertoken")
+  if usertoken <> ""
+    m.static_params.token = usertoken
+    print "[api.init]", "usertoken=";usertoken
+  else
+    print "[api.init]", "usertoken not setup"
+  end if
 
   m.port = createObject("roMessagePort")
-
   m.xfer = createObject("roUrlTransfer")
   m.xfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
   m.xfer.InitClientCertificates()
   m.xfer.setPort(m.port)
 
   m.top.observeField("request", m.port)
+  m.top.observeField("cancel", m.port)
 
   ' setting the task thread function
   m.top.functionName = "task"
@@ -33,7 +38,7 @@ function buildUrl(action as String, params={} as Object) as String
 	params.Append(m.static_params)
 
 	for each k in params
-		qs = Substitute("&{0}={1}",k, params[k])
+		qs = Substitute("&{0}={1}",k, params[k].toStr()) 'value must be a string or convertible to string'
 		url.AppendString(qs, qs.len())
 	end for
 	return url
@@ -89,11 +94,15 @@ sub task() 'Task function
     mt = type(msg)
     print "[api.task.msg]", mt
     if mt = "roSGNodeEvent"
+      if msg.GetField() = "request"
         req = msg.GetData()
        	action = req.action
         req.Delete("action")
  	      get( buildUrl(action, req) )
-     else if mt="roUrlEvent" ' If a request was made
+      else if msg.GetField() = "cancel"
+        cancel()
+      endif
+    else if mt="roUrlEvent" ' If a request was made
         processResponse(msg)
     else ' Handle unexpected cases
 	     print "[hc.task.msg] Error: unrecognized event type '"; mt ; "'"
@@ -103,12 +112,11 @@ sub task() 'Task function
 end sub
 
 
-
 'Received a response
 sub processResponse(msg as Object)
-  print "[api.proc.resp]", "request=", msg.GetSourceIdentity(), "HTTP=", msg.GetResponseCode()
+  print "[api.proc.resp]", "request="; msg.GetSourceIdentity(), "HTTP="; msg.GetResponseCode()
 
-  if msg.GetResponseCode() <= 200 AND msg.GetResponseCode() < 300
+  if msg.GetResponseCode() >= 200 AND msg.GetResponseCode() < 300
     m.top.onresult = parseJson(msg.GetString())
     'print "[hc.proc.resp]", m.top.result
   else
@@ -117,8 +125,3 @@ sub processResponse(msg as Object)
 
   m.top.responseheaders = msg.GetResponseHeaders()
 end sub
-
-function parse_topseries(reply as String) as Object
-	o = parseJson(reply)
-	return o.results
-end function

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?> 
-<!-- Copyright (C) Vlad Troyanker 2016.  All Rights Reserved. -->
+<!-- Copyright (C) Reign Software 2016.  All Rights Reserved. -->
 
 <component name="Callout" extends="Group">
     <interface>

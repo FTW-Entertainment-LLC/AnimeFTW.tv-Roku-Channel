@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2016 Roku, Inc. All rights reserved.
+#  Copyright (c) 2016 Reign Software. All rights reserved.
 #  Roku Manifest File
 # 
 
@@ -7,8 +7,8 @@
 title=AnimeFTW
 
 major_version=0
-minor_version=1
-build_version=0
+minor_version=8
+build_version=2
 
 # Channel Assets
 mm_icon_focus_sd=pkg:/images/channel-poster-214x144.png

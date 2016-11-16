@@ -1,5 +1,5 @@
 ' ** 
-' ** Copyright Vlad Troyanker 2016. All Rights Reserved. ***
+' ** Copyright (C) Reign Software 2016. All Rights Reserved. ***
 ' ** See attached LICENSE file included in this package for details.'
 ' ** 
 
@@ -10,7 +10,15 @@ sub Main(input as Dynamic)
   screen = CreateObject("roSGScreen")
   m.port = CreateObject("roMessagePort")
   screen.setMessagePort(m.port)
+'Setup global config
+'This can be used in SG comp init()
   m.global = screen.getGlobalNode()
+  m.global.AddField("config", "assocarray", false)
+  
+  reg = RegistrySync()
+  m.global.config = {
+        usertoken : reg.read("usertoken"), 
+  }
   
 
   scene = screen.CreateScene("MainScene")

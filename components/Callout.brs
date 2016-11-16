@@ -1,5 +1,5 @@
 ' ** 
-' ** Copyright Vlad Troyanker 2016. All Rights Reserved. ***
+' ** Copyright (C) Reign Software 2016. All Rights Reserved. ***
 ' ** See attached LICENSE file included in this package for details.'
 ' ** 
 
